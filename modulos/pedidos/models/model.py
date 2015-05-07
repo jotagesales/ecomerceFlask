@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
 
 from sqlalchemy import Integer, String, Column, ForeignKey
-from default.engine import Object_persistent
+
 from modulos.pedidos import TABLE_PREFIX
 from modulos.seguranca.models import CLIENTE
 from modulos.seguranca.models.model import Usuario
+
 
 __author__ = 'Jotage'
 

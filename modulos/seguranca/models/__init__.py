@@ -8,7 +8,7 @@ ADMINISTRADOR = 1
 FUNCIONARIO   = 2
 CLIENTE       = 3
 
-TIPO_USUARIO = {
+PERFIL = {
                 ADMINISTRADOR:'Administrador',
                 FUNCIONARIO:u'Funcioário',
                 CLIENTE:'Cliente'

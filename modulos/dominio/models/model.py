@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from sqlalchemy import Column, String, Integer, ForeignKey
+
 from default.engine import Base, session
 from modulos.dominio import TABLE_PREFIX
+
 __author__ = 'Jotage'
 
 class UF(Base):

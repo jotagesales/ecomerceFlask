@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 __author__ = 'jotage'
 
 """
@@ -47,9 +46,11 @@ def create_all_tables_database():
 
         Base.metadata.create_all(engine)
 
+        #realiznado a importação dos municipios de acordo com a tabela do IBGE
         from modulos.dominio.tabelas.importacao_tabelas import importacao_municipio,importacao_uf
         importacao_uf()
         importacao_municipio()
+
     except Exception as e:
         raise
 
