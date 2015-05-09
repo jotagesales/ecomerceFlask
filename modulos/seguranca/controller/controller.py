@@ -1,5 +1,5 @@
 # coding: utf-8
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from default.engine import session
 from default.exceptions import Preenchimento_Obrigatorio, Duplicidade_Registro, Preenchimento_Invalido
@@ -10,7 +10,6 @@ from modulos.seguranca.models.model import Usuario
 INCLUSAO = 1
 ALTERACAO = 2
 
-
 class SegurancaController:
     def salvar(self, object):
         try:
@@ -19,11 +18,28 @@ class SegurancaController:
         except Exception as error:
             session.rollback()
             raise
+        return object
+        
+    def verifica_usuario(self, pLogin, pSenha):
+        """
+        Método responsável por verificar se um usuário é valido ou não
+        rtype: retorna o id do usuário e um boolean identificando se o usuário é válido ou não
+        param pLogin: string com o login do usuario
+        param pSenha: string com a senha em texto puro        
+        """
+        id_usuario = 0
+        usuario_is_valid = False
+        usuario = session.query(Usuario).filter_by(login = pLogin).first()
+        if usuario:
+            if check_password_hash( usuario.senha, pSenha):
+                id_usuario = usuario.id_usuario
+                usuario_is_valid = True
+        return id_usuario, usuario_is_valid
+            
 
     def addUsuario(self, pLogin='', pSenha='', pEmail='', pPerfil=0, pUsuarioLog=0):
         """
-
-
+        :rtype : retorna um objeto usuario populado
         :param pPerfil: inteiro ou CONSTANTE contendo o perfil do usuario
         :param pLogin: string de login
         :param pSenha: string de senha
@@ -39,7 +55,7 @@ class SegurancaController:
 
         self.__validaUsuario(usuario, INCLUSAO)
 
-        self.salvar(usuario)
+        return self.salvar(usuario)
 
     def __validaUsuario(self, usuarioObject, pAcao):
 
@@ -63,27 +79,21 @@ class SegurancaController:
         if usuarioObject.perfil not in PERFIL.keys():
             raise Preenchimento_Invalido(u'perfil de usuário')
 
-
     def configuraUsuarioAdministrador(self):
         # só realiza a criacao do usuario administrador se a tabela estiver vazia
         if not session.query(Usuario).all():
             login = raw_input('Informe o login para o Administrador: ')
             senha = raw_input('Informe a senha para o Administrador: ')
             email = raw_input('Informe um email para o Administrador: ')
-
-            usuario = Usuario()
-            usuario.usuario_log = -1
-            usuario.login = login.strip()
-            usuario.senha = generate_password_hash(senha.strip())
-            usuario.email = email.strip()
-            usuario.perfil = ADMINISTRADOR
-
-            self.salvar(usuario)
+            
+            self.addUsuario(pLogin= login, 
+                            pSenha= senha, 
+                            pEmail= email, 
+                            pPerfil=ADMINISTRADOR, 
+                            pUsuarioLog= -1
+                            )
 
 
 if __name__ == '__main__':
     # print session.query(Usuario).filter_by(login='jotage.sales').all()
-    try:
-        SegurancaController().addUsuario('jotage.sales212', '123', 'fsdfs', 10, -1)
-    except Exception as error:
-        print error.message
+    print SegurancaController().verifica_usuario()

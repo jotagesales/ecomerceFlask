@@ -1,0 +1,57 @@
+{% extends 'base_backend.html' %}
+
+{% block titulo %} Dashboard {% endblock %}
+
+{% block menu %}
+	<div class="navbar-inner"> <! inicio menu -- >
+		<div class="container">
+			<button class="btn btn-navbar" data-toggle="collapse" data-target="#app-nav-top-bar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+			<a href="/areainterna" class="brand"><i class="icon-leaf"> Pedidos Web</i></a>
+			<div class="nav-collapse">
+				<ul class="nav">
+					<li class="dropdown"> 
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Cadastro <b class="caret hidden-phone"></b></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#"> Produto</a>
+							</li>
+							<li>
+								<a href="#"> Cliente</a>
+							</li>
+						</ul> 			
+					</li><!-- fim do menu cadastro -->	
+					<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Relatórios<b class="caret hidden-phone"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">Produtos</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> Clientes</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> Vendas</a>
+                                        </li>
+                                    </ul>
+                     </li> <!-- fim menu relatório -->
+					 <ul class="nav pull-right">
+						 <li><a href="/areainterna/logout"> Sair </a></li>
+					 </ul>
+				<ul> <!-- fim menu -->
+			</div>
+		</div> 
+	</div>
+	
+	
+{% endblock %}
+
+
+{% block conteudo %} 
+	
+
+{% endblock %}
+
