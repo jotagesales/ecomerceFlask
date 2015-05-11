@@ -35,8 +35,10 @@ class SegurancaController:
                 id_usuario = usuario.id_usuario
                 usuario_is_valid = True
         return id_usuario, usuario_is_valid
-            
-
+        
+    def consultaUsuarios(self):
+        return session.query(Usuario).order_by(Usuario.login).all()        
+           
     def addUsuario(self, pLogin='', pSenha='', pEmail='', pPerfil=0, pUsuarioLog=0):
         """
         :rtype : retorna um objeto usuario populado

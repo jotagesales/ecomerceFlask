@@ -9,6 +9,3 @@ HOST = 'localhost'
 DATABASE = 'pedido_web'
 PORTA = '5432'
 
-
-#configuracoes de paginacao
-QTDE_REGISTROS_PAGINA = 100

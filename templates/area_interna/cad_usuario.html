@@ -1,0 +1,55 @@
+{% extends 'base_backend.html' %}
+
+{% block titulo %} Cadastro de usuários {% endblock%}
+
+
+{% block conteudo %}        
+      <div class="box" ng-app="app_pedidos" ng-controller="usuarioCtrl">
+            <button class="btn btn-success"> Novo</button><br>
+            <div class="box-header">
+                  <i class="icon-user"></i>
+                  <h5>Cadastro de usuários</h5>
+            </div>
+                        
+            <div class="box-content">
+                  <div class="control-group">
+                        <label class="control-label">Login</label>
+                        <div class="controls">
+                              <input type="text" ng-model="usuario.login"></input>
+                        </div>
+                  </div>
+                  <div class="control-group">
+                        <label class="control-label">E-mail</label>
+                        <div class="controls">
+                              <input type="text" ng-model="usuario.email"></input>
+                        </div>
+                  </div>
+                  <div class="control-group">
+                        <label class="control-label" >Perfil</label>
+                        <div class="controls">
+                              <select ng-model="usuario.perfil" ng-options="perfil.codigo as perfil.descricao for perfil in perfis">
+                                    <option default> selecione um perfil</option>
+                              </select>                              
+                        </div>
+                  </div>
+                  <div class="control-group">
+                        <label class="control-label">Senha</label>
+                        <div class="controls">
+                              <input type="password" ng-model="usuario.senha"></input>
+                        </div>
+                  </div>
+                  <div class="control-group">
+                        <label class="control-label">Confirmar senha</label>
+                        <div class="controls">
+                              <input type="password"></input>
+                        </div>
+                  </div>
+            </div>
+            <div class="box-footer">
+                  <button class="btn btn-primary" ng-click="salvar(usuario)" ng-disabled="validaUsuario(usuario)"> Salvar</button>
+            </div>
+      </div>
+{% endblock %}
+
+
+

@@ -1,8 +1,10 @@
 from modulos.seguranca.controller.controller import SegurancaController
-from API import api_area_interna
+from modulos.seguranca.models import PERFIL
 
-dicicionario = {'id':1}
+print PERFIL
 
-dicicionario.pop('id')
-
-print dicicionario
+lista =[]
+for i in PERFIL.keys():
+	lista.append({'codigo':i, 'descricao': PERFIL[i]})
+	
+print lista 

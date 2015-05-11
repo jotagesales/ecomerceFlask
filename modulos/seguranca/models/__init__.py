@@ -8,8 +8,7 @@ ADMINISTRADOR = 1
 FUNCIONARIO   = 2
 CLIENTE       = 3
 
-PERFIL = {
-                ADMINISTRADOR:'Administrador',
-                FUNCIONARIO:u'Funcioário',
+PERFIL = {      ADMINISTRADOR:'Administrador',
+                FUNCIONARIO:u'Funcionário',
                 CLIENTE:'Cliente'
                 }
