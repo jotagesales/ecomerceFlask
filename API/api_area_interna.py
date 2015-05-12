@@ -63,7 +63,8 @@ def cadastroUsuario():
 def consultaUsuarios():
     usuarios = []
     for usuario in  server_seguranca.consultaUsuarios():
-        usuarios.append({'login':usuario.login,
+        usuarios.append({'id':usuario.id_usuario,
+                         'login':usuario.login,
                          'email': usuario.email,
                          'perfil':PERFIL[usuario.perfil]
                         })

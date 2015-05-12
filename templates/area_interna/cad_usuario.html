@@ -3,50 +3,101 @@
 {% block titulo %} Cadastro de usuários {% endblock%}
 
 
-{% block conteudo %}        
-      <div class="box" ng-app="app_pedidos" ng-controller="usuarioCtrl">
-            <button class="btn btn-success"> Novo</button><br>
-            <div class="box-header">
-                  <i class="icon-user"></i>
-                  <h5>Cadastro de usuários</h5>
-            </div>
-                        
-            <div class="box-content">
-                  <div class="control-group">
-                        <label class="control-label">Login</label>
-                        <div class="controls">
-                              <input type="text" ng-model="usuario.login"></input>
-                        </div>
+{% block conteudo %}
+      <style type="text/css">
+            #btnNovo{
+                  margin-bottom: 5px
+            }
+      </style>
+      <div ng-app="app_pedidos" ng-controller="usuarioCtrl">        
+            <button class="btn btn-success" id="btnNovo"> Novo</button>
+                  
+             <div class="box">
+                   <div class="box-header">
+                         <i class="icon-user"></i>
+                          <h5>Usuários cadastrados</h5>
+                          
+                   </div>
+                   
+                   <script type="text/javascript">
+                         $(function(){
+                               $("#tblUsuarios").tablesorter();
+                         })
+                   </script>
+                  
+                   <div class="box-content box-table">
+                         <table id="tblUsuarios" class="table table-hover tablesorter">
+                               <thead>
+                                     <tr>
+                                           <th class="header">Login</th>
+                                           <th class="header">Perfil</th>
+                                           <th class="header">E-mail</th>
+                                           <th class="header"></th>
+                                     </tr>
+                               </thead>
+                               <tbody>
+                                     <tr ng-repeat="usuario in usuarios">
+                                           <td> [[ usuario.login]]</td>
+                                           <td> [[ usuario.perfil]]</td>
+                                           <td> [[ usuario.email]]</td>
+                                           <td>
+                                                 <a href="#" class="btn btn-small btn-info"><i class="btn-icon-only icon-pencil"></i></a>
+                                                 <a href="#" class="btn btn-small btn-danger" ng-click="excluir(usuario)"><i class="btn-icon-only icon-remove"></i></a>
+                                                 
+                                           </td>
+                                     </tr>
+                               </tbody>
+                         </table>
+                   </div>                 
+                   
+             </div>
+                  
+            
+            <div class="box">
+                  <div class="box-header">
+                        <i class="icon-user"></i>
+                        <h5>Cadastro de usuários</h5>
                   </div>
-                  <div class="control-group">
-                        <label class="control-label">E-mail</label>
-                        <div class="controls">
-                              <input type="text" ng-model="usuario.email"></input>
+                              
+                  <div class="box-content">
+                        <form class="form-horizontal"> <!-- inicio form cadastro de usuario -->
+                              <div class="control-group">
+                                    <label class="control-label">Login</label>
+                                    <div class="controls">
+                                          <input type="text" ng-model="usuario.login"></input>
+                                    </div>
+                              </div>
+                              <div class="control-group">
+                                    <label class="control-label">E-mail</label>
+                                    <div class="controls">
+                                          <input type="text" ng-model="usuario.email"></input>
+                                    </div>
+                              </div>
+                              <div class="control-group">
+                                    <label class="control-label" >Perfil</label>
+                                    <div class="controls">
+                                          <select ng-model="usuario.perfil" ng-options="perfil.codigo as perfil.descricao for perfil in perfis">
+                                                <option default> selecione um perfil</option>
+                                          </select>                              
+                                    </div>
+                              </div>
+                              <div class="control-group">
+                                    <label class="control-label">Senha</label>
+                                    <div class="controls">
+                                          <input type="password" ng-model="usuario.senha"></input>
+                                    </div>
+                              </div>
+                              <div class="control-group">
+                                    <label class="control-label">Confirmar senha</label>
+                                    <div class="controls">
+                                          <input type="password"></input>
+                                    </div>
+                              </div>
                         </div>
-                  </div>
-                  <div class="control-group">
-                        <label class="control-label" >Perfil</label>
-                        <div class="controls">
-                              <select ng-model="usuario.perfil" ng-options="perfil.codigo as perfil.descricao for perfil in perfis">
-                                    <option default> selecione um perfil</option>
-                              </select>                              
+                        <div class="box-footer">
+                              <button class="btn btn-primary" ng-click="salvar(usuario)" ng-disabled="validaUsuario(usuario)"> Salvar</button>
                         </div>
-                  </div>
-                  <div class="control-group">
-                        <label class="control-label">Senha</label>
-                        <div class="controls">
-                              <input type="password" ng-model="usuario.senha"></input>
-                        </div>
-                  </div>
-                  <div class="control-group">
-                        <label class="control-label">Confirmar senha</label>
-                        <div class="controls">
-                              <input type="password"></input>
-                        </div>
-                  </div>
-            </div>
-            <div class="box-footer">
-                  <button class="btn btn-primary" ng-click="salvar(usuario)" ng-disabled="validaUsuario(usuario)"> Salvar</button>
+                  </form> <!--fim formulário de cadastro -->
             </div>
       </div>
 {% endblock %}

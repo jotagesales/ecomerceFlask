@@ -15,6 +15,12 @@ app.controller('usuarioCtrl', function($scope, $http){
 			})
 	}
 	
+	
+	$scope.excluir = function(usario){
+		console.log('clicou')
+	}
+	
+	
 	$scope.consultaUsuarios = function(params) {
 		$http.get('/areainterna/consultaUsuarios')
 			.success(function(data){
