@@ -1,6 +1,8 @@
 # coding=utf-8
 from flask import Blueprint, redirect, render_template, url_for, request, session, jsonify, session
 
+from default.decorators import login_required
+
 from modulos.seguranca.controller.controller import SegurancaController
 from modulos.seguranca.models import PERFIL
 
@@ -13,6 +15,7 @@ bp_area_interna = Blueprint('areainterna',__name__, url_prefix='/areainterna')
 server_seguranca = SegurancaController()
 
 @bp_area_interna.route('/', methods=['GET'])
+@login_required
 def home():
     return render_template('area_interna/dasboard.html')
 
@@ -34,12 +37,14 @@ def login():
     
     
 @bp_area_interna.route('/logout', methods=['GET'])
+@login_required
 def logout():
     session.pop('id_usuario_logado')
     return redirect(url_for('areainterna.login'))
 
 
 @bp_area_interna.route('/cadastroUsuario', methods=['GET', 'POST'])
+@login_required
 def cadastroUsuario():
     if request.method == 'POST':
         login = request.json.get('login')
@@ -48,18 +53,35 @@ def cadastroUsuario():
         perfil= request.json.get('perfil')
         usuario_logado = session.get('id_usuario_logado')
         try:
-            server_seguranca.addUsuario(pLogin= login,
+            #adicionando um novo usuario no banco de dados
+            usuario = server_seguranca.addUsuario(pLogin= login,
                                         pSenha= senha,
                                         pEmail= email,
                                         pPerfil= perfil,
                                         pUsuarioLog= usuario_logado
                                         )
-            return jsonify(msg='registro salvo'),201
+            #serializado o objeto usuario em json para dar a resposta
+            usuario = {'id': usuario.id_usuario,
+                        'login':usuario.login,
+                        'email': usuario.email,
+                        'perfil': PERFIL.get(usuario.perfil)}
+                        
+            return jsonify(item= usuario),201
         except Exception as error:
             return jsonify(msg= error.message),400
     return render_template('area_interna/cad_usuario.html')
+    
+@bp_area_interna.route('/excluirUsuario/<int:idUsuario>', methods= ['DELETE'])
+@login_required
+def excluirUsuario(idUsuario):
+    try:
+        server_seguranca.excluirUsuario(idUsuario)
+        return jsonify(msg='Registro Excluído com sucesso'), 200
+    except Exception as error:
+        return jsonify(msg= error.message), 400
  
 @bp_area_interna.route('/consultaUsuarios')
+@login_required
 def consultaUsuarios():
     usuarios = []
     for usuario in  server_seguranca.consultaUsuarios():
@@ -71,8 +93,15 @@ def consultaUsuarios():
     return jsonify(items = usuarios)
     
 @bp_area_interna.route('/consultaPerfil')
+@login_required
 def consultaPerfil():
     perfis =[]
     for i in PERFIL.keys():
         perfis.append({'codigo':i, 'descricao': PERFIL[i]})
     return jsonify(items = perfis)
+    
+@bp_area_interna.route('/cadastroProduto', methods=['GET', 'POST'])
+@login_required
+def cadastroProdutos():
+    return render_template('area_interna/cad_produto.html')
+    

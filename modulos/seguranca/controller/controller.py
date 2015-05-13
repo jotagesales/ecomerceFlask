@@ -83,6 +83,16 @@ class SegurancaController:
         #validando campos com preenchimento inválido
         if usuarioObject.perfil not in PERFIL.keys():
             raise Preenchimento_Invalido(u'perfil de usuário')
+            
+    def excluirUsuario(self, pIdUsuario):
+        usuario = session.query(Usuario).filter_by(id_usuario= pIdUsuario).first()
+                        
+        if usuario:
+            session.delete(usuario)
+            session.commit()
+        else:
+            raise Registro_nao_encontrado(u'Usuário')
+            
 
     def configuraUsuarioAdministrador(self):
         # só realiza a criacao do usuario administrador se a tabela estiver vazia
