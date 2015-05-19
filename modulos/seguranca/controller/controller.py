@@ -2,7 +2,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from default.engine import session
-from default.exceptions import Preenchimento_Obrigatorio, Duplicidade_Registro, Preenchimento_Invalido
+from default.exceptions import Preenchimento_Obrigatorio, Duplicidade_Registro, Preenchimento_Invalido, Registro_nao_encontrado
 from modulos.seguranca.models import ADMINISTRADOR, PERFIL
 from modulos.seguranca.models.model import Usuario
 
@@ -40,7 +40,16 @@ class SegurancaController:
         """
         rtype: retorna uma lista de usuários
         """
-        return session.query(Usuario).order_by(Usuario.login).all()        
+        return session.query(Usuario).order_by(Usuario.login).all()       
+        
+    def consultaUsuario(self, pIdUsuario):
+        """
+        rtype: retorna um objeto usuário que tem o Id passado por parâmetro
+        """
+        usuario = session.query(Usuario).filter_by(id_usuario= pIdUsuario).first()        
+        if usuario == None:
+            raise Registro_nao_encontrado(u'Usuário')
+        return usuario
            
     def addUsuario(self, pLogin='', pSenha='', pEmail='', pPerfil=0, pUsuarioLog=0):
         """

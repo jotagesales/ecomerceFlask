@@ -61,7 +61,7 @@ def cadastroUsuario():
                                         pUsuarioLog= usuario_logado
                                         )
             #serializado o objeto usuario em json para dar a resposta
-            usuario = {'id': usuario.id_usuario,
+            usuario = { 'id': usuario.id_usuario,
                         'login':usuario.login,
                         'email': usuario.email,
                         'perfil': PERFIL.get(usuario.perfil)}
@@ -88,9 +88,24 @@ def consultaUsuarios():
         usuarios.append({'id':usuario.id_usuario,
                          'login':usuario.login,
                          'email': usuario.email,
-                         'perfil':PERFIL[usuario.perfil]
+                         'perfil':PERFIL.get(usuario.perfil)
                         })
     return jsonify(items = usuarios)
+
+@bp_area_interna.route('/consultaUsuario/<int:idUsuario>')
+def consultaUsuario(idUsuario):
+    try:
+        usuario = server_seguranca.consultaUsuario(idUsuario)
+        usuario = {'id': usuario.id_usuario,
+                   'login':usuario.login,
+                   'email':usuario.email,
+                   'perfil':PERFIL.get(usuario.perfil)
+                   }
+    except Exception as error:
+        msg = error.message
+        return jsonify(msg= msg)
+    return jsonify(item= usuario)
+    
     
 @bp_area_interna.route('/consultaPerfil')
 @login_required
@@ -104,4 +119,7 @@ def consultaPerfil():
 @login_required
 def cadastroProdutos():
     return render_template('area_interna/cad_produto.html')
+    
+    
+    
     

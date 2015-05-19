@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from sqlalchemy import Integer, String, Column, ForeignKey
+from sqlalchemy import Integer, String, Column, DECIMAL, Boolean ,ForeignKey
+
+from default.engine import Object_persistent
 
 from modulos.pedidos import TABLE_PREFIX
 from modulos.seguranca.models import CLIENTE
@@ -18,16 +20,25 @@ class Cliente(Usuario):
     nome = Column(String(100), nullable= False)
     documento = Column(String(14), nullable= False)
     usuario_id = Column(Integer, ForeignKey(__ref_id_usuario))
+    
+class UnidadeMedida(Object_persistent):
+    __tablename__ = TABLE_PREFIX + 'unidadeMedida'
+    
+    id_un_medida = Column(Integer,primary_key= True)
+    descricao    = Column(String(60), nullable= False)
+    
+class Produto(Object_persistent):
+    __tablename__ = TABLE_PREFIX + 'produto'
+    
+    __ref_id_un_medida = '{0}.{1}'.format(UnidadeMedida.__tablename__, UnidadeMedida.id_un_medida.description)
+    
+    id_produto = Column(Integer, primary_key= True)
+    descricao  = Column(String(100), nullable= False)
+    preco_custo= Column(DECIMAL(10,2))
+    preco_venda= Column(DECIMAL(10,2))
+    ativo      = Column(Boolean, default= True)
+    id_un_medida = Column(Integer, ForeignKey(__ref_id_un_medida))
+    
 
-    def __init__(self, pNome, pDocumento, pEmail):
-        super(Cliente, self).__init__(pDocumento, pEmail, CLIENTE)
-        self.nome = pNome
-        self.documento = pDocumento
 
-if __name__ == '__main__':
-    from default.engine import session
-    cliente = Cliente('Jose Geraldo ', '12345678909', 'jotage_sales@hotmail.com')
-
-    session.add(cliente)
-    session.commit()
 

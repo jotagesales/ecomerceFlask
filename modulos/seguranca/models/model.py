@@ -8,7 +8,7 @@ from modulos.seguranca import TABLE_PREFIX
 __author__ = 'Jotage'
 
 class Usuario(Object_persistent):
-    __tablename__ = TABLE_PREFIX + 'usuarios'
+    __tablename__ = TABLE_PREFIX + 'usuario'
 
 
     id_usuario = Column(Integer,primary_key= True)

@@ -3,10 +3,83 @@
 {% block titulo %} Produtos {% endblock %}
 
 {% block conteudo %} 
-	<div class="alert alert-error">
-		<a class="close" href="#">x</a>
-		<h1> colocar aqui o conteúdo do cadastro de produtos</h1>
-	</div>
+	<div ng-app="app_pedidos" ng-controller="produtoCtrl">
+		<div>
+			<button class="btn btn-success" id="btnNovo"> Novo</button>
+            <button class="btn btn-danger" id="btnExcluir"> Excluir</button>
+        </div> <!-- fim botoes topo página -->
+		<div class="box">
+			<div class="box-header">
+				<h5>Produtos cadastrados</h5>
+			</div> <!-- fim header box -->
+			
+			<div class="box-content box-table">
+				<table class="table table-hover tablesorter">
+					<thead>
+						<tr>
+							<th class="header">Marcar</th>
+							<th class="header">Produto</th>
+							<th class="header">Un. Medida</th>
+							<th class="header">Preço venda</th>
+							<th class="header">Ativo</th>
+							<th class="header">	</th>								
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>Yogurte 1L</td>
+							<td>Litro</td>
+							<td>R$ 50,12</td>
+							<td><input type="checkbox" checked="checked"></td>
+							<td>
+								<a href="#" class="btn btn-small btn-info" ng-click="editarUsuario(user)"><i class="btn-icon-only icon-pencil"></i></a>
+                                <a href="#" class="btn btn-small btn-danger" ng-click="excluirUsuario(user)"><i class="btn-icon-only icon-remove"></i></a>
+                            <td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>Doce de leite</td>
+							<td>Unidade</td>
+							<td>R$ 3,50</td>
+							<td><input type="checkbox" checked="checked"></td>
+							<td>
+								<a href="#" class="btn btn-small btn-info" ng-click="editarUsuario(user)"><i class="btn-icon-only icon-pencil"></i></a>
+                                <a href="#" class="btn btn-small btn-danger" ng-click="excluirUsuario(user)"><i class="btn-icon-only icon-remove"></i></a>
+                            <td>
+						</tr>
+					</tbody>
+				</table><!-- fim tabela produtos -->
+			</div> <!-- fim tabela produtos -->
+		</div> <!-- fim box tablela de produtos -->
+		
+		
+		<!-- inicio modal -->
+		<div id="modalFormCadProduto" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+						<h4>Cadastro de produtos</h4>
+					</div> <!-- fim header modal -->
+					<div class="modal-body">
+						<form method="post">
+							
+							<div>
+								<input type="text"></input>
+							</div>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal"> Fechar</button>
+                                <input type="submit" class="btn btn-primary" data-dismiss="modal" value="Salvar"></input>
+							</div> <!-- fim modal footer -->
+						</form> <!-- fim form -->
+					</div> <!-- fim modal body -->
+				</div> <!-- fim content modal -->
+			</div>
+		</div><!-- fim modal -->
+		
+	</div> <!-- fim conteudo -->
 {% endblock %}
 
 

@@ -4,8 +4,12 @@
 
 
 {% block conteudo %} 
-	<div class="alert alert-error">
-		<a class="close" href="#">x</a>
+	<script type="text/javascript">
+		$('#msgDashboard').alert('close')
+	</script>
+	
+	<div id="msgDashboard" class="alert alert-error">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<h1> colocar aqui o conteúdo do dasboard</h1>
 	</div>
 {% endblock %}
